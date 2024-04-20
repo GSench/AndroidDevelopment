@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ADB.md",
+                "file": "DependencyInjection.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ADB.md",
+                "file": "DependencyInjection.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ADB.md",
+                "file": "DependencyInjection.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ADB.md"
+                "file": "DependencyInjection.md"
               }
             }
           }
@@ -148,6 +148,17 @@
   },
   "active": "360483c9302772e2",
   "lastOpenFiles": [
+    "Views.md",
+    "ViewModel.md",
+    "res.md",
+    "RecyclerView.md",
+    "Network.md",
+    "MVVM.md",
+    "Fragments.md",
+    "DependencyInjection.md",
+    "Coroutines&Flows.md",
+    "AppDevTools.md",
+    "ADB.md",
     "_Notes.md"
   ]
 }

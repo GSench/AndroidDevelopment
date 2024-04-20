@@ -8,7 +8,7 @@
 
 Для устройств >= Android 11 можно подключаться по qr коду из Android Studio
 
-![2024-02-13_04-19-59.png](D:\YandexDisk\Учеба\ComputerScience\MyCS\Android\img\2024-02-13_04-19-59.png)
+![2024-02-13_04-19-59.png](img/2024-02-13_04-19-59.png)
 
 Для более ранних версий работает схема: [kotlin - Running wifi adb on android 10 device - Stack Overflow](https://stackoverflow.com/questions/74681846/running-wifi-adb-on-android-10-device)
 
@@ -53,4 +53,4 @@ List of devices attached
 
 Готово! Устройство появляется в списке ADB:
 
-![2024-02-13_04-18-06.png](D:\YandexDisk\Учеба\ComputerScience\MyCS\Android\img\2024-02-13_04-18-06.png)
+![2024-02-13_04-18-06.png](img/2024-02-13_04-18-06.png)
