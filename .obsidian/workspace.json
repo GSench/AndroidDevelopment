@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "4cc62561eaafd016",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "DependencyInjection.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -146,18 +159,19 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "360483c9302772e2",
+  "active": "4cc62561eaafd016",
   "lastOpenFiles": [
+    "Coroutines&Flows.md",
+    "AppDevTools.md",
+    "Fragments.md",
+    "DependencyInjection.md",
+    "WhatchList.md",
     "Views.md",
     "ViewModel.md",
     "res.md",
     "RecyclerView.md",
     "Network.md",
     "MVVM.md",
-    "Fragments.md",
-    "DependencyInjection.md",
-    "Coroutines&Flows.md",
-    "AppDevTools.md",
     "ADB.md",
     "_Notes.md"
   ]
