@@ -641,9 +641,42 @@ classDiagram
     RepositoryB ..> OkHttp_2 : Instance reusing
 ```
 
-А single binding may not declare more than one `@Scope`
+А single binding may not declare more than one `@Scope`. `@Component`s may have > 1 `@Scope`.
+
+We want to inject `MyManager` in both `@Component`s:
 
 ```kotlin
+@ComponentAScope
+@ComponentBScope // ERROR!
+class MyManager @Inject constructor(){...}
+
+@Component
+@ComponentAScope
+interface ComponentA {...}
+
+@Component
+@ComponentBScope
+interface ComponentB {...}
+```
+
+Solution:
+
+```kotlin
+@Scope
+annotation class MyManagerScope
+
+@MyManagerScope
+class MyManager @Inject constructor()
+
+@Component
+@ComponentAScope
+@MyManagerScope
+interface ComponentA {...}
+
+@Component
+@ComponentBScope
+@MyManagerScope
+interface ComponentB {...}
 
 ```
 
@@ -1055,4 +1088,312 @@ class FragmentB: Fragment() {
 }
 ```
 
+#### `@Qualifier`
 
+Allows to mark different `@BindsInstance` args, `@Bind` fun, `@Provides` fun that has the same return type.
+
+We want to choose `@Provides` or `@Bind` implementation:
+
+```kotlin
+@Module
+object NetworkModule {
+	@Provides
+	fun okHttpClientNonCaching(): OkHttpClient { ... }
+	@Provides
+	fun okHttpClientCaching(): OkHttpClient { ... }
+}
+// ERROR: OkHttpClient is bound multiple times!
+```
+
+Creating `@Qualifier`s:
+
+```kotlin
+@Qualifier
+annotation class CachingClient
+@Qualifier
+annotation class NonCachingClient
+```
+
+Qualification:
+
+```kotlin
+@Module
+object NetworkModule {
+	@Provides
+	@NonCachingClient
+	fun okHttpClientNonCaching(): OkHttpClient { ... }
+	@Provides
+	@CachingClient
+	fun okHttpClientCaching(): OkHttpClient { ... }
+}
+class PresenterA @Inject constructor (
+	@CachingClient private val client: OkHttpClient
+	...
+) {}
+class FragmentA: Fragment {
+	@Inject
+	@NonCachingClient
+	lateinit var client: OkHttpClient
+	@Inject
+	@CachingClient
+	lateinit var clientCache: OkHttpClient
+	...
+}
+```
+
+`@Qualifier` do not affect object's lifetime!
+
+##### `@Qualifier` primitives
+
+```kotlin
+@Qualifier
+annotation class Version
+@Module
+object VersionModule {
+	@Provides
+	@Version
+	fun versionName(): String = BuildConfig.VERSION_NAME
+	@Provides
+	@Version
+	fun versionCode(): Int = BuildConfig.VERSION_CODE
+}
+class Logger @Inject constructor (
+	@Version val versionName: String,
+	@Version val versionCode: Int,
+) {...}
+```
+
+##### `@Qualifier` with arguments
+
+```kotlin
+enum class HostMode {
+	PROD,
+	DEBUG
+}
+@Qualifier
+annotation class Host(val mode: HostMode)
+@Module
+object HostModule {
+	@Provides
+	@Host(HostMode.DEBUG)
+	fun debug(): String = "debug.host.com"
+	@Provides
+	@Host(HostMode.PROD)
+	fun prod(): String = "host.com"
+}
+@Module
+object NetworkModule {
+	@Provides
+	fun retrofit(
+		@Host(HostMode.DEBUG) debug: String,
+		@Host(HostMode.PROD) prod: String
+	): Retrofit {
+		val host = if(BuildConfig.DEBUG) debug else prod
+		return ...
+	}
+}
+```
+
+
+### Final Dagger DI implementation
+
+Components:
+
+```kotlin
+@Scope annotation class AppScope
+
+@Component(modules = [
+	HostModule::class,
+	NetworkModule::class,
+	RepositoryModule::class,
+	PresenterModule::class,
+])
+@AppScope
+interface AppComponent {
+	@Component.Factory
+	interface Factory {
+		fun create(@BindsInstance context: Context): AppComponent
+	}
+	fun getComponentA(): ComponentA.Factory
+}
+
+@Scope annotation class ComponentAScope
+@Subcomponent @ComponentAScope
+interface ComponentA {
+	@Subcomponent.Factory
+	interface Factory {
+		fun create(@BindsInstance view: ViewA): ComponentA
+	}
+	fun getPresenterA(): PresenterA
+	fun getComponentB(): ComponentB.Factory
+}
+
+@Scope annotation class ComponentBScope
+@Subcomponent @ComponentBScope
+interface ComponentB {
+	@Subcomponent.Factory
+	interface Factory {
+		fun create(@BindsInstance view: ViewB): ComponentB
+	}
+	fun getPresenterB(): PresenterB
+}
+```
+
+Network:
+
+```kotlin
+enum class HostMode {PROD, DEBUG}
+@Qualifier annotation class Host(val mode: HostMode)
+@Module object HostModule {
+	@Provides @Host(HostMode.DEBUG) @AppScope
+	fun debug(): String = "debug.host.com"
+	@Provides @Host(HostMode.PROD) @AppScope
+	fun prod(): String = "host.com"
+}
+
+@Qualifier annotation class CachingClient
+@Qualifier annotation class NonCachingClient
+@Module interface NetworkModule {
+	companion object {
+		@Provides @CachingClient @AppScope
+		fun okHttpClientCache(context: Context): OkHttpClient {
+			...
+			return client
+		}
+		@Provides @NonCachingClient @AppScope
+		fun okHttpClient(context: Context): OkHttpClient {
+			...
+			return client
+		}
+		@Provides @AppScope
+		fun retrofit(
+			context: Context,
+			@Host(HostMode.DEBUG) debug: String,
+			@Host(HostMode.PROD) prod: String,
+		): Retrofit {
+			val host = if(BuildConfig.DEBUG) debug else prod
+			...
+			return retrofitImpl
+		}
+		@Provides @CachingClient @AppScope
+		fun retrofitWithCache(
+			@CachingClient client: OkHttpClient,
+			@Host(HostMode.DEBUG) debug: String,
+			@Host(HostMode.PROD) prod: String,
+		): Retrofit {
+			val host = if(BuildConfig.DEBUG) debug else prod
+			...
+			return retrofitImpl
+		}
+	}
+}
+```
+
+Repositories:
+
+```kotlin
+interface RepositoryA{...}
+class RepositoryAImpl @Inject constructor (
+	@NonCachingClient private val client: Lazy<OkHttpClient>
+): RepositoryA {...}
+
+interface RepositoryB{...}
+class RepositoryBImpl @Inject constructor (
+	@CachingClient private val retrofit: Lazy<Retrofit>
+): RepositoryB {...}
+
+@Module
+interface RepositoryModule {
+	@Binds fun repoA(impl: RepositoryAImpl): RepositoryA
+	@Binds fun repoB(impl: RepositoryBImpl): RepositoryB
+}
+```
+
+Presenters:
+
+```kotlin
+interface PresenterA {...}
+class PresenterAImpl @Inject constructor (
+	private val viewA: ViewA,
+	private val repoA: RepositoryA,
+) {}
+interface PresenterB {...}
+class PresenterBImpl @Inject constructor (
+	private val viewB: ViewB,
+	private val repoA: RepositoryA,
+	private val repoB: RepositoryB,
+) {}
+
+@Module
+interface PresenterModule {
+	@Binds fun presenterA(impl: PresenterAImpl): PresenterA
+	@Binds fun presenterB(impl: PresenterBImpl): PresenterB
+}
+```
+
+ViewModule:
+
+```kotlin
+interface ViewA {...}
+interface ViewB {...}
+```
+
+Views:
+
+```kotlin
+class MyApplication: Application() {
+	lateinit var component: AppComponent
+		private set
+	override fun onCreate(){
+		...
+		component = DaggerAppComponent().factory(context = this).create()
+	}
+}
+
+interface ViewA {...}
+
+class ActivityA: Activity(), ViewA {
+	lateinit var component: ComponentA
+	@Inject lateinit var presenter: PresenterA
+	override fun onCreate(...){
+		...
+		component = (application as MyApplication)
+			.component
+			.getComponentA()
+			.factory()
+			.create(view = this)
+		component.inject(this)
+		...
+	}
+	... {
+		...
+		val fragmentB = FragmentB.newInstance(component)
+		...
+	}
+}
+
+interface ViewB {...}
+
+class FragmentB: Fragment(), ViewB {
+	lateinit var component: ComponentB
+	@Inject lateinit var presenter: PresenterB
+	companion object {
+		...
+		fun newInstance(..., componentA: ComponentA): FragmentB {
+			val fragmentB = FragmentB()
+			...
+			fragmentB.component = componentA
+				.getComponentB()
+				.factory()
+				.create(view = fragmentB)
+			...
+			return fragmentB
+		}
+	}
+	override fun onCreate(...){
+		...
+		component.inject(this)
+		...
+	}
+}
+```

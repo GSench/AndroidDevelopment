@@ -7,5 +7,6 @@
 6. [Хранение данных](https://www.youtube.com/watch?v=bo8YAkPi8Po)
 7. [Воркшоп по работе с кэшом /загруженными данными](https://www.youtube.com/watch?v=iNqBw6btaPI)
 8. [Jetpack Compose](https://www.youtube.com/watch?v=6iVK-DRp61c)
-9. [JVM](https://www.youtube.com/watch?v=14oH9HWoMd8)
+9. [Автотесты](https://www.youtube.com/watch?v=58PJAxom2MY)
+10. [JVM](https://www.youtube.com/watch?v=14oH9HWoMd8)
 
