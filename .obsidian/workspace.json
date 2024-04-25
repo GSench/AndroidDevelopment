@@ -13,7 +13,19 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "DependencyInjection.md",
+                "file": "Coroutines&Flows.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "287c14c9c45ac0e1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Concurrency.md",
                 "mode": "source",
                 "source": false
               }
@@ -31,7 +43,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -81,8 +94,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "9bb04658875a1eb3",
@@ -98,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "DependencyInjection.md",
+                "file": "Concurrency.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "DependencyInjection.md",
+                "file": "Concurrency.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "DependencyInjection.md"
+                "file": "Concurrency.md"
               }
             }
           }
@@ -159,11 +171,17 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "5a02af9672504667",
+  "active": "287c14c9c45ac0e1",
   "lastOpenFiles": [
-    "WhatchList.md",
-    "DependencyInjection.md",
+    "img/ThreadLifecycle.png",
+    "img/Life_cycle_of_a_Thread_in_Java.jpg",
+    "img/2024-04-25_01-32-57.png",
+    "img/2024-04-25_01-30-14.png",
+    "img/2024-04-25_01-29-21.png",
     "Coroutines&Flows.md",
+    "Concurrency.md",
+    "DependencyInjection.md",
+    "WhatchList.md",
     "AppDevTools.md",
     "Fragments.md",
     "Views.md",
