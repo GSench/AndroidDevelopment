@@ -305,6 +305,170 @@ public class BlockingQueue<T> {
 }
 ```
 
+#### Interruption
+
+- https://docs.oracle.com/javase/tutorial/essential/concurrency/interrupt.html
+- https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html#interrupt--
+
+`interrupt()` - Interrupts this thread.
+
+- If this thread is blocked in an invocation of the `wait()`, `join()` or `sleep()`, then its interrupt status will be cleared and it will receive an [`InterruptedException`](https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html "class in java.lang").
+- If this thread is blocked in an I/O operation upon an [`InterruptibleChannel`](https://docs.oracle.com/javase/8/docs/api/java/nio/channels/InterruptibleChannel.html "interface in java.nio.channels") then the channel will be closed, the thread's interrupt status will be set, and the thread will receive a [`ClosedByInterruptException`](https://docs.oracle.com/javase/8/docs/api/java/nio/channels/ClosedByInterruptException.html "class in java.nio.channels").
+- If this thread is blocked in a [`Selector`](https://docs.oracle.com/javase/8/docs/api/java/nio/channels/Selector.html "class in java.nio.channels") then the thread's interrupt status will be set and it will return immediately
+- **If none of the previous conditions hold then this thread's interrupt status will be set.**
+- Interrupting a thread that is not alive need not have any effect.
+
+`Thread.currentThread().isInterrupted` - Tests whether this thread has been interrupted. The _interrupted status_ of the thread is unaffected by this method.
+
+`Thread.interrupted()` - Tests whether the current thread has been interrupted. The _interrupted status_ of the thread is cleared by this method.
+
+**Interruption is cooperative!** If no Exception case is occured, we need to check interrupt status during Thread execution if we expecting one.
+
+```kotlin
+val thread = thread {  
+    println("Thread started")  
+    Thread.sleep(1)  
+    repeat(100) { i ->  
+        println("$i: isInterrupted: ${Thread.currentThread().isInterrupted}")
+        // println("$i: interrupted(): ${Thread.interrupted()}")
+    }  
+    println("Thread finished by itself")  
+}  
+Thread.sleep(9)  
+println("trying to interrupt")  
+thread.interrupt()  
+println("interrupt executed")
+```
+
+Output is not stable, because interruption during `Thread.sleep(1)` causes `InterruptedException`. One of successfull experiments:
+
+```output
+Thread started
+0: isInterrupted: false
+1: isInterrupted: false
+2: isInterrupted: false
+...
+43: isInterrupted: false
+44: isInterrupted: false
+trying to interrupt
+45: isInterrupted: false
+interrupt executed
+46: isInterrupted: true
+47: isInterrupted: true
+...
+98: isInterrupted: true
+99: isInterrupted: true
+Thread finished by itself
+```
+
+In case of `Thread.interrupted()`:
+
+```output
+Thread started
+0: interrupted(): false
+1: interrupted(): false
+...
+63: interrupted(): false
+64: interrupted(): false
+trying to interrupt
+65: interrupted(): false
+interrupt executed
+66: interrupted(): true
+67: interrupted(): false
+...
+98: interrupted(): false
+99: interrupted(): false
+Thread finished by itself
+```
+
+Cooperative interruption:
+
+```kotlin
+val thread = thread {  
+    println("Thread started")  
+    Thread.sleep(1)  
+    repeat(100) { i ->  
+        val isInterrupted = Thread.currentThread().isInterrupted  
+        println("$i: isInterrupted: $isInterrupted")  
+        if(isInterrupted){  
+            println("Cooperative interruption")  
+            return@thread  
+        }  
+    }  
+    println("Thread finished by itself")  
+}  
+Thread.sleep(9)  
+println("trying to interrupt")  
+thread.interrupt()  
+println("interrupt executed")
+```
+```output
+Thread started
+0: isInterrupted: false
+1: isInterrupted: false
+...
+18: isInterrupted: false
+19: isInterrupted: false
+trying to interrupt
+interrupt executed
+20: isInterrupted: false
+21: isInterrupted: true
+Cooperative interruption
+```
+
+Interruption during `Thread.sleep()` by `InterruptedException`
+
+```kotlin
+val thread = thread {  
+    println("Thread started")  
+    try {  
+        Thread.sleep(100)  
+    } catch (e: InterruptedException){  
+        println("Thread interrupted")  
+        return@thread  
+    }  
+    println("Thread finished by itself")  
+}  
+Thread.sleep(10)  
+println("trying to interrupt")  
+thread.interrupt()  
+println("interrupt executed")
+```
+```output
+Thread started
+trying to interrupt
+interrupt executed
+Thread interrupted
+```
+
+Interruption during `join()` by `InterruptedException`
+
+```kotlin
+val threadA = thread {  
+    Thread.sleep(100)  
+}  
+val threadB = thread {  
+    println("Thread started")  
+    try {  
+        threadA.join()  
+    } catch (e: InterruptedException){  
+        println("Thread interrupted")  
+        return@thread  
+    }  
+    println("Thread finished by itself")  
+}  
+Thread.sleep(10)  
+println("trying to interrupt")  
+threadB.interrupt()  
+println("interrupt executed")
+```
+```output
+Thread started
+trying to interrupt
+interrupt executed
+Thread interrupted
+```
+
 ### Syncronization
 
 
@@ -350,6 +514,8 @@ B: rightFork taken
 A: taking rightFork
 B: taking leftFork
 ```
+
+
 ## Android
 
 ![ANR](img/2024-04-25_01-32-57.png)
