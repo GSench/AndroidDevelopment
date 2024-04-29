@@ -20,18 +20,6 @@
             }
           },
           {
-            "id": "287c14c9c45ac0e1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Concurrency.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "4cc62561eaafd016",
             "type": "leaf",
             "state": {
@@ -43,8 +31,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -110,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Concurrency.md",
+                "file": "Coroutines&Flows.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Concurrency.md",
+                "file": "Coroutines&Flows.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +137,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Concurrency.md"
+                "file": "Coroutines&Flows.md"
               }
             }
           }
@@ -171,17 +158,26 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "287c14c9c45ac0e1",
+  "active": "360483c9302772e2",
   "lastOpenFiles": [
+    "Concurrency.md",
+    "Coroutines&Flows.md",
+    "WhatchList.md",
+    "Books/Library.md",
+    "Books/library.txt",
+    "Books/Java Concurrency in Practice.pdf",
+    "Books",
+    "books/Java Concurrency in Practice.pdf",
+    "books/library.txt",
+    "books/Новый текстовый документ.txt",
+    "books",
+    "Новая папка",
     "img/ThreadLifecycle.png",
     "img/Life_cycle_of_a_Thread_in_Java.jpg",
     "img/2024-04-25_01-32-57.png",
     "img/2024-04-25_01-30-14.png",
     "img/2024-04-25_01-29-21.png",
-    "Coroutines&Flows.md",
-    "Concurrency.md",
     "DependencyInjection.md",
-    "WhatchList.md",
     "AppDevTools.md",
     "Fragments.md",
     "Views.md",
