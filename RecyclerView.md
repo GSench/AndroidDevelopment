@@ -106,8 +106,6 @@ class MovieListItemViewHolder (val binding: MovieListItemBinding): RecyclerView.
         holder.bind(currentList[position], onMovieClick)
 ```
 
-awdawd
-
 ## По видео:
 
 ### 1. Абстрактный Item
@@ -198,16 +196,16 @@ movieListAdapter.submitList(it)
 > Because apparently I am calling the `submitList(...)` function for a reason. I am pretty sure people are trying to figure out what went wrong for hours until they figure out the submitList() ignores silently the call.
 > 
 > This is because of `Google`s weird logic. So if you pass the same list to the adapter it does not even call the `DiffUtil`.
-> 
-> ```kotlin
-> public void submitList(final List<T> newList) {
->     if (newList == mList) {
->         // nothing to do
->         return;
->     }
-> ....
-> }
-> ```
+
+```kotlin
+public void submitList(final List<T> newList) {
+    if (newList == mList) {
+        // nothing to do
+        return;
+    }
+....
+}
+```
 > 
 > I really don't understand the whole point of this `ListAdapter` if it can't handle changes on the same list. If you want to change the items on the list you pass to the `ListAdapter` and see the changes then either you need to create a deep copy of the list or you need to use regular `RecyclerView` with your own `DiffUtill` class.
 
@@ -215,18 +213,18 @@ movieListAdapter.submitList(it)
 
 > What you can do in case you're not using any such libraries is:
 > 
-> ```kotlin
-> submitList(null);
-> submitList(myList);
-> ```
+```kotlin
+submitList(null);
+submitList(myList);
+```
 > 
 > Another solution would be to override submitList (which doesn't cause that quick blink) as such:
 > 
-> ```kotlin
-> override fun submitList(list: List<CatItem>?) {
->     super.submitList(list?.let { ArrayList(it) })
-> }
-> ```
+```kotlin
+override fun submitList(list: List<CatItem>?) {
+    super.submitList(list?.let { ArrayList(it) })
+}
+```
 > 
 > Questionable logic but works perfectly. My preferred method is the second one because it doesn't cause each row to get an onBind call.
 
@@ -275,7 +273,7 @@ implementation("androidx.recyclerview:recyclerview:1.3.2")
         }
 ```
 
-Другой похожий адаптер (хз чем отличается):
+Другой похожий адаптер:
 
 [Делаем код в адаптере чище с помощью MergeAdapter / Хабр](https://habr.com/ru/articles/523840/)
 

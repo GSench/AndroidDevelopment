@@ -117,7 +117,7 @@ val httpClient = OkHttpClient
         .build()
 ```
 
-Люди советуют использовать 1 HttpClient на все приложение:
+Используется 1 HttpClient на все приложение:
 
 [Best way to use HttpClient in Android &#8211; Craig Andrews](https://candrews.integralblue.com/2011/09/best-way-to-use-httpclient-in-android/):
 
@@ -263,4 +263,4 @@ fun networkStateFlow(context: Context) : Flow<NetworkState> {
 
 [networking - Android check internet connection - Stack Overflow](https://stackoverflow.com/questions/9570237/android-check-internet-connection)
 
-хз насколько это правильно, но наверно лучше так не делать
+лучше так не делать

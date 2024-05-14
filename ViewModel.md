@@ -2,7 +2,7 @@
 
 ViewModel - это реализация VM от Google Android, которая связана с жизненным циклом Activity/Fragment. **Объект класса `ViewModel `жив на протяжении всего жизненного цикла**. Необходимо отнаследоваться от него, предоставить `companion object` с `Factory` и инициализировать экземпляр особым образом с помощью делегата `viewModels()`. **Все `properties` экземпляра класса `ViewModel` будут жить вместе с самим объектом не зависимо от того `LiveData` они или нет!**
 
-Гайд от Google Android очень хорош: [ViewModel overview &nbsp;|&nbsp; Android Developers](https://developer.android.com/topic/libraries/architecture/viewmodel)
+Гайд от Google Android: [ViewModel overview &nbsp;|&nbsp; Android Developers](https://developer.android.com/topic/libraries/architecture/viewmodel)
 
 Как создать ViewModel: [Create ViewModels with dependencies &nbsp;|&nbsp; Android Developers](https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-factories)
 
@@ -99,6 +99,6 @@ private suspend fun onListScrolledToBottom() {
 
 ## Flows в ViewModel
 
-Вместо LiveData можно использовать обычнве потоки Kotlin. Они гораздо более гибкие и удобные в использовании и предоставляют больше функционала: [Android, Kotlin Flow во ViewModel — все сложно / Хабр](https://habr.com/ru/articles/581914/)
+Вместо LiveData можно использовать обычнее потоки Kotlin. Они гораздо более гибкие и удобные в использовании и предоставляют больше функционала: [Android, Kotlin Flow во ViewModel — все сложно / Хабр](https://habr.com/ru/articles/581914/)
 
-Собственно на проекте в Сириусе так и делали: https://github.com/JumpyWizardEni/SiriusProject/blob/master/app/src/main/java/com/siriusproject/coshelek/wallet_list/ui/view/view_models/WalletListViewModel.kt
+Пример использования: https://github.com/JumpyWizardEni/SiriusProject/blob/master/app/src/main/java/com/siriusproject/coshelek/wallet_list/ui/view/view_models/WalletListViewModel.kt

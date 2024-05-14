@@ -146,8 +146,6 @@
 
 Хороший пример использования Shimmer: [GitHub - janirefdez/ShimmerEffectAndroid: Basic Android example where you can find how Shimmer Effect is implemented on Android.](https://github.com/janirefdez/ShimmerEffectAndroid/tree/master)
 
-**Кстати это также хороший пример Retrofit, Repository, MVVM, ViewModel, CleanArchitecture, RecyclerView. Очень базовый, очень упрощенный, и поэтому качественный!**
-
 ### Shimmer Drawable
 
 Например, в качестве placeholder'а для Glide: [android - How to use a view (shimmer) as a placeholder for an imageView (Glide) - Stack Overflow](https://stackoverflow.com/questions/61076174/how-to-use-a-view-shimmer-as-a-placeholder-for-an-imageview-glide)

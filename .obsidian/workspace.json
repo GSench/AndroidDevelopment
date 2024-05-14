@@ -11,21 +11,19 @@
             "id": "360483c9302772e2",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "WhatchList.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           },
           {
             "id": "49c68d3fe95a8ceb",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "img/thread-signaling-1.png"
+                "file": "Coroutines&Flows.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -96,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "img/thread-signaling-1.png",
+                "file": "Coroutines&Flows.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "img/thread-signaling-1.png",
+                "file": "Coroutines&Flows.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,7 +134,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "img/thread-signaling-1.png"
+                "file": "Coroutines&Flows.md"
               }
             }
           }
@@ -159,6 +157,19 @@
   },
   "active": "49c68d3fe95a8ceb",
   "lastOpenFiles": [
+    "AppDevTools.md",
+    "Coroutines&Flows.md",
+    "ADB.md",
+    "_Notes.md",
+    "Views.md",
+    "ViewModel.md",
+    "res.md",
+    "RecyclerView.md",
+    "Network.md",
+    "MVVM.md",
+    "Fragments.md",
+    "DependencyInjection.md",
+    "DataStorage.md",
     "img/ThreadLifecycle.png",
     "img/thread-signaling-1.png",
     "img/Life_cycle_of_a_Thread_in_Java.jpg",
@@ -169,20 +180,7 @@
     "img/concurrency-models-3.png",
     "img/concurrency-models-1.png",
     "img/blocking-queue.png",
-    "img/2024-04-25_01-32-57.png",
     "WhatchList.md",
-    "Views.md",
-    "ViewModel.md",
-    "res.md",
-    "RecyclerView.md",
-    "Network.md",
-    "MVVM.md",
-    "Fragments.md",
-    "DependencyInjection.md",
-    "DataStorage.md",
-    "Coroutines&Flows.md",
-    "AppDevTools.md",
-    "ADB.md",
     "img",
     "Concurrency.md",
     "Books/Library.md",
@@ -193,7 +191,6 @@
     "books/library.txt",
     "books/Новый текстовый документ.txt",
     "books",
-    "Новая папка",
-    "_Notes.md"
+    "Новая папка"
   ]
 }

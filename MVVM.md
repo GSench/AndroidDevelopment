@@ -1,8 +1,6 @@
 # MVVM
 
-пример использования Shimmer: [GitHub - janirefdez/ShimmerEffectAndroid: Basic Android example where you can find how Shimmer Effect is implemented on Android.](https://github.com/janirefdez/ShimmerEffectAndroid/tree/master)
-
-**Кстати это также хороший пример Retrofit, Repository, MVVM, ViewModel, CleanArchitecture, RecyclerView. Очень базовый, очень упрощенный, и поэтому качественный!**
+пример использования MVVM в Shimmer: [GitHub - janirefdez/ShimmerEffectAndroid: Basic Android example where you can find how Shimmer Effect is implemented on Android.](https://github.com/janirefdez/ShimmerEffectAndroid/tree/master)
 
 Гайды по MVVM:
 

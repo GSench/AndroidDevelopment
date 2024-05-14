@@ -2,7 +2,7 @@
 
 Лекция по корутинам от Yandex: [Корутины - YouTube](https://www.youtube.com/watch?v=ITLe4FIrrTg)
 
-Ну и гайд от JetBrains: [Coroutines guide | Kotlin Documentation](https://kotlinlang.org/docs/coroutines-guide.html)
+гайд от JetBrains: [Coroutines guide | Kotlin Documentation](https://kotlinlang.org/docs/coroutines-guide.html)
 
 Реализация ожидания завершения корутины: [android - How to wait for end of a coroutine - Stack Overflow](https://stackoverflow.com/questions/59491707/how-to-wait-for-end-of-a-coroutine)
 
@@ -58,7 +58,7 @@
         .launchIn(CoroutineScope(Dispatchers.IO))
 ```
 
-Офф.гайд от гугла тоже хорош: [Kotlin flows on Android &nbsp;|&nbsp; Android Developers](https://developer.android.com/kotlin/flow)
+Офф.гайд от гугла: [Kotlin flows on Android &nbsp;|&nbsp; Android Developers](https://developer.android.com/kotlin/flow)
 
 В итоге везде использовал `callbackFlow`. А есть еще `flow`, `channelFlow`:
 
